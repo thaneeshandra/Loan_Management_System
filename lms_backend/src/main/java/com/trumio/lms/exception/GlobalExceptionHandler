@@ -1,0 +1,105 @@
+package com.trumio.lms.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.validation.FieldError;
+import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@ControllerAdvice
+@Slf4j
+public class GlobalExceptionHandler {
+    
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<String> handleUserAlreadyExists(UserAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(InvalidCredentialsException.class)
+    public ResponseEntity<String> handleInvalidCredentials(InvalidCredentialsException ex) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUserNotFound(UserNotFoundException ex) {
+        ErrorResponse error = new ErrorResponse("USER_NOT_FOUND", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+    
+    @ExceptionHandler(ValidationException.class)
+    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult().getFieldErrors()
+            .stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
+        ErrorResponse error = new ErrorResponse("VALIDATION_ERROR", errors.toString());
+        return ResponseEntity.badRequest().body(error);
+    }
+    
+    //Handles all other exceptions
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGeneral(Exception ex) {
+        log.error("Unexpected error: ", ex);
+        ErrorResponse error = new ErrorResponse("INTERNAL_ERROR", "An unexpected error occurred");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+
+     @ExceptionHandler(LoanNotFoundException.class)
+    public ResponseEntity<Object> handleLoanNotFound(LoanNotFoundException ex, WebRequest request) {
+        return buildResponse(ex, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(DocumentNotFoundException.class)
+    public ResponseEntity<Object> handleDocumentNotFound(DocumentNotFoundException ex, WebRequest request) {
+        return buildResponse(ex, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ResponseEntity<Object> handleRoleNotFound(RoleNotFoundException ex, WebRequest request) {
+        return buildResponse(ex, HttpStatus.BAD_REQUEST, request);
+    }
+
+    @ExceptionHandler(SettingNotFoundException.class)
+    public ResponseEntity<Object> handleSettingNotFound(SettingNotFoundException ex, WebRequest request) {
+        return buildResponse(ex, HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(UnauthorizedAccessException.class)
+    public ResponseEntity<Object> handleUnauthorizedAccess(UnauthorizedAccessException ex, WebRequest request) {
+    return buildResponse(ex, HttpStatus.FORBIDDEN, request);
+}
+
+@ExceptionHandler(TokenExpiredException.class)
+public ResponseEntity<Object> handleTokenExpired(TokenExpiredException ex, WebRequest request) {
+    return buildResponse(ex, HttpStatus.UNAUTHORIZED, request);
+}
+
+@ExceptionHandler(FileUploadException.class)
+public ResponseEntity<Object> handleFileUpload(FileUploadException ex, WebRequest request) {
+    return buildResponse(ex, HttpStatus.BAD_REQUEST, request);
+}
+
+@ExceptionHandler(FileNotFoundException.class)
+public ResponseEntity<Object> handleFileNotFound(FileNotFoundException ex, WebRequest request) {
+    return buildResponse(ex, HttpStatus.NOT_FOUND, request);
+}
+
+@ExceptionHandler(InvalidFileTypeException.class)
+public ResponseEntity<Object> handleInvalidFileType(InvalidFileTypeException ex, WebRequest request) {
+    return buildResponse(ex, HttpStatus.BAD_REQUEST, request);
+}
+
+@ExceptionHandler(LoanStatusException.class)
+public ResponseEntity<Object> handleLoanStatus(LoanStatusException ex, WebRequest request) {
+    return buildResponse(ex, HttpStatus.CONFLICT, request);
+}
+
+@ExceptionHandler(DuplicateEntryException.class)
+public ResponseEntity<Object> handleDuplicateEntry(DuplicateEntryException ex, WebRequest request) {
+    return buildResponse(ex, HttpStatus.CONFLICT, request);
+}
+
+}
+

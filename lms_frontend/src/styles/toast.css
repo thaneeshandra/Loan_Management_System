@@ -1,0 +1,50 @@
+/* Custom Toast Styles with Tailwind */
+
+/* Override react-toastify default styles */
+.Toastify__toast {
+  @apply rounded-lg shadow-md font-sans !important;
+}
+
+.Toastify__toast-body {
+  @apply py-2 px-3 text-sm !important;
+}
+
+/* Close button styling */
+.Toastify__close-button {
+  @apply opacity-70 hover:opacity-100 transition-opacity !important;
+}
+
+/* Progress bar colors */
+.Toastify__progress-bar--success {
+  @apply bg-green-500 !important;
+}
+
+.Toastify__progress-bar--error {
+  @apply bg-red-500 !important;
+}
+
+.Toastify__progress-bar--warning {
+  @apply bg-yellow-500 !important;
+}
+
+.Toastify__progress-bar--info {
+  @apply bg-blue-500 !important;
+}
+
+/* Toast icon colors */
+.Toastify__toast-icon {
+  @apply mr-3 !important;
+}
+
+/* Add smooth animation */
+.Toastify__slide-enter--bottom-right,
+.Toastify__slide-enter--bottom-left,
+.Toastify__slide-enter--bottom-center {
+  @apply transition-all duration-300 ease-out !important;
+}
+
+.Toastify__slide-exit--bottom-right,
+.Toastify__slide-exit--bottom-left,
+.Toastify__slide-exit--bottom-center {
+  @apply transition-all duration-300 ease-in !important;
+}

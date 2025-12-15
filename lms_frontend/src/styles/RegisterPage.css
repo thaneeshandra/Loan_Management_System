@@ -1,0 +1,17 @@
+.password-input::-ms-clear {
+  display: none;
+}
+
+/* You can also add these to hide clear buttons in other browsers */
+.password-input::-webkit-search-cancel-button,
+.password-input::-webkit-inner-spin-button {
+  display: none;
+}
+
+input[type="password"]::-ms-reveal,
+input[type="password"]::-ms-clear,
+input[type="password"]::-webkit-contacts-auto-fill-button {
+  display: none !important;
+  visibility: hidden;
+  pointer-events: none;
+}
