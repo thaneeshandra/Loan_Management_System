@@ -123,7 +123,7 @@ Update .env with your local values:
 - DB_PASSWORD=your_db_password
 
 - JWT_SECRET_KEY=your_secret_key
-- 
+  
 - JWT_EXPIRATION=86400000
 
 
