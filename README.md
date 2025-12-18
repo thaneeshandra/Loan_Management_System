@@ -119,6 +119,7 @@ Copy the example file:
 Update .env with your local values:
 
 DB_USER=your_db_username
+
 DB_PASSWORD=your_db_password
 
 JWT_SECRET_KEY=your_secret_key
