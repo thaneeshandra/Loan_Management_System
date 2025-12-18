@@ -118,12 +118,13 @@ Copy the example file:
 
 Update .env with your local values:
 
-DB_USER=your_db_username
+- DB_USER=your_db_username
 
-DB_PASSWORD=your_db_password
+- DB_PASSWORD=your_db_password
 
-JWT_SECRET_KEY=your_secret_key
-JWT_EXPIRATION=86400000
+- JWT_SECRET_KEY=your_secret_key
+- 
+- JWT_EXPIRATION=86400000
 
 
 ⚠️ .env files are not committed to GitHub for security reasons.
